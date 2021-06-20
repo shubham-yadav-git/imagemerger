@@ -1,0 +1,188 @@
+<html>
+
+<head>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>Suprams Web Servi</title>
+    <style>
+        body {
+            background-image: radial-gradient(rgb(117, 106, 106), rgb(238, 237, 237), rgb(139, 136, 136));
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+
+
+        }
+
+        .body-container {
+
+            display: flex;
+            flex-flow: row;
+            align-content: space-between;
+            justify-content: center;
+            flex-wrap: wrap-reverse;
+            
+        }
+
+        .card {
+            margin: 1rem;
+            max-width: 60%;
+
+            align-self: center;
+        }
+
+        .form {
+
+            display: flex;
+
+            flex-flow: column;
+            /* margin:1rem; */
+            color: black;
+            flex-wrap: initial;
+
+            padding: 10px;
+        }
+
+
+        .items {
+            padding: auto;
+            display: flex;
+            flex-flow: row;
+            /* margin-left: 15px; */
+
+            align-items: flex-start;
+            /* border: solid black 10px; */
+
+            padding-bottom: 20px;
+        }
+
+        .output {
+            width: 400px;
+            height: 400px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Image and text -->
+
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">
+            <img src="{{ url_for('static', filename='photos.png') }}" width="30" height="30"
+                class="d-inline-block align-top" alt="">
+            ImageMerger
+        </a>
+    </nav>
+
+
+
+    
+    <div class="body-container">
+
+
+        <div class="card text-center">
+
+            <div class="card-body">
+                <h4 class="card-title">Merge Images</h4>
+                <p class="card-text">
+                <form class="form " action="/upload" method="post" enctype="multipart/form-data">
+
+                    <div class="items">
+                        <label for="myfile" style="color:black">Select a Image 1:</label>
+                        <input class="form-control" type="file" id="myfile" name="image1"> {% if message == "merged" %}
+                        <img class="items" width="150px" height="150px" style="margin-left: 15px;"
+                            src="{{  url_for('static', filename='image1.jpg')  }}"> {% endif %}
+
+                    </div>
+
+                    <br>
+                    <div class="items">
+
+                        <label for="myfile"  style="color:black" >Select a Image 2:</label>
+                        <input class="form-control" type="file" id="myfile" name="image2"> {% if message == "merged" %}
+                        <img class="items" width="150px" height="150px" style="margin-left: 15px;"
+                            src="{{  url_for('static', filename='image2.jpg')  }}"> {% endif %}
+
+                    </div>
+
+
+                    <div class="form-check items">
+                        <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name="horizontal">
+                        &nbsp;&nbsp;&nbsp;<label class="form-check-label" for="flexCheckDefault">
+                          Horizontally
+                        </label>
+                      </div>
+                      <div class="form-check items">
+                        <input class="form-check-input" type="checkbox" value="1" id="flexCheckChecked" name="vertical">
+                        &nbsp;&nbsp;&nbsp;
+                        <label class="form-check-label" for="flexCheckChecked">
+                          Vertically
+                        </label>
+                      </div>
+
+                    <button type="submit" class="btn-lg btn-primary" type="submit">Upload</button>
+
+                </form>
+
+                </p>
+            </div>
+
+
+
+        </div>
+
+
+        {% if message == "merged" and ver%}
+        <div class="output">
+            <div class="card text-left">
+                <img class="card-img-top" alt="Your Merged Image Will be visible here"
+                    src="{{ url_for('static',filename='merged_image_v.jpg')  }}" alt="">
+                <div class="card-body">
+                    <h4 class="card-title"><a href="/download/ver"><button class="btn btn-success ">Download</button></a>
+                    </h4>
+                    <p class="card-text">Click on above button to download {{message}} image</p>
+                </div>
+
+            </div>
+        </div>
+
+        {% endif %}
+
+        
+
+
+        {% if message == "merged" and hor %}
+        <div class="output">
+            <div class="card text-left">
+                <img class="card-img-top" alt="Your Merged Image Will be visible here"
+                    src="{{ url_for('static',filename='merged_image_h.jpg')  }}" alt="">
+                <div class="card-body">
+                    <h4 class="card-title"><a href="/download/hor"><button class="btn btn-success ">Download</button></a>
+                    </h4>
+                    <p class="card-text">Click on above button to download {{message}} image</p>
+                </div>
+
+            </div>
+        </div>
+
+        {% endif %}
+
+
+
+
+
+        <!-- Option 1: Bootstrap Bundle with Popper -->
+        <script
+            src="{{  url_for('static', filename='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js')  }}"
+            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+            crossorigin="anonymous"></script>
+
+
+    </div>
+
+</body>
+
+</html>
